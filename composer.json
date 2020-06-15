@@ -1,0 +1,17 @@
+{
+    "name": "zhengwhizz\/customized-form",
+    "description": "Package description here.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "zhengwhizz",
+            "email": "zhengjun.whizz@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Zhengwhizz\\CustomizedForm\\": "src"
+        }
+    }
+}
