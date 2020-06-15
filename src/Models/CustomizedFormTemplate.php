@@ -11,7 +11,7 @@ class CustomizedFormTemplate extends Model implements CustomizedFormTemplateCont
     {
         $this->setTable(config('customized_form.table_names.template'));
     }
-    public function forms()
+    public function forms(): HasMany
     {
         return $this->hasMany(
             config('customized_form.models.form'),

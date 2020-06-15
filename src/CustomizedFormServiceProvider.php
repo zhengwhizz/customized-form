@@ -10,15 +10,18 @@ class CustomizedFormServiceProvider extends ServiceProvider
 {
     public function boot(CustomizedFormRegistrar $loader, Filesystem $filesystem)
     {
-        if (isNotLumen()) {
-            $this->publishes([
-                __DIR__ . '/../config/customized_form.php' => config_path('customized_form.php'),
-            ], 'config');
+        $this->publishes([
+            __DIR__ . '/../config/customized_form.php' => config_path('customized_form.php'),
+        ], 'config');
 
-            $this->publishes([
-                __DIR__ . '/../database/migrations/create_customized_form_tables.php.stub' => $this->getMigrationFileName($filesystem),
-            ], 'migrations');
+        $this->publishes([
+            __DIR__ . '/../database/migrations/create_customized_form_tables.php.stub' => $this->getMigrationFileName($filesystem),
+        ], 'migrations');
 
+        // 注册路由
+        if ((method_exists($this->app, 'routesAreCached') && !$this->app->routesAreCached())
+            || $this->isLumen()) {
+            require __DIR__ . '/../routes/api.php';
         }
 
         $this->registerModelBindings();
@@ -30,12 +33,10 @@ class CustomizedFormServiceProvider extends ServiceProvider
 
     public function register()
     {
-        if (isNotLumen()) {
-            $this->mergeConfigFrom(
-                __DIR__ . '/../config/customized_form.php',
-                'customized_form'
-            );
-        }
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/customized_form.php',
+            'customized_form'
+        );
     }
 
     protected function registerModelBindings()
@@ -61,5 +62,9 @@ class CustomizedFormServiceProvider extends ServiceProvider
                 return $filesystem->glob($path . '*_create_customized_form_tables.php');
             })->push($this->app->databasePath() . "/migrations/{$timestamp}_create_customized_form_tables.php")
             ->first();
+    }
+    protected function isLumen()
+    {
+        return strpos($this->app->version(), 'Lumen') !== false;
     }
 }
