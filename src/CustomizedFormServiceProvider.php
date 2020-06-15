@@ -19,10 +19,7 @@ class CustomizedFormServiceProvider extends ServiceProvider
         ], 'migrations');
 
         // 注册路由
-        if ((method_exists($this->app, 'routesAreCached') && !$this->app->routesAreCached())
-            || $this->isLumen()) {
-            require __DIR__ . '/../routes/api.php';
-        }
+        require __DIR__ . '/../routes/api.php';
 
         $this->registerModelBindings();
 
