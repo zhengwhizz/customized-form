@@ -10,7 +10,7 @@ use Zhengwhizz\CustomizedForm\Contracts\CustomizedFormTemplate as TemplateContra
 
 class CustomizedFormServiceProvider extends ServiceProvider
 {
-    public function boot(CustomizedFormRegistrar $loader, Filesystem $filesystem)
+    public function boot(Filesystem $filesystem)
     {
         $this->publishes([
             __DIR__ . '/../config/customized_form.php' => config_path('customized_form.php'),
@@ -26,9 +26,6 @@ class CustomizedFormServiceProvider extends ServiceProvider
 
         $this->registerModelBindings();
 
-        $this->app->singleton(CustomizedFormRegistrar::class, function ($app) use ($loader) {
-            return $loader;
-        });
     }
 
     public function register()
@@ -72,8 +69,10 @@ class CustomizedFormServiceProvider extends ServiceProvider
             })->push($this->app->databasePath() . "/migrations/{$timestamp}_create_customized_form_tables.php")
             ->first();
     }
+
     protected function isLumen()
     {
         return strpos($this->app->version(), 'Lumen') !== false;
     }
+
 }

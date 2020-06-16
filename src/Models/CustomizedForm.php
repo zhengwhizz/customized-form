@@ -37,10 +37,4 @@ class CustomizedForm extends Model implements CustomizedFormContract
         );
     }
 
-    // public function getHtmlAttribute()
-    // {
-    //     // dd(array_keys(config('customized_form.placeholders')), array_values($this->placeholder_data));
-    //     return preg_replace(array_keys($this->placeholder_data), array_values($this->placeholder_data), $this->content);
-    // }
-
 }

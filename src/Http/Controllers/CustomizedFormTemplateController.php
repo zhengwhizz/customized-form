@@ -5,34 +5,46 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Routing\Controller;
 use Zhengwhizz\CustomizedForm\Contracts\CustomizedFormTemplate as TemplateContract;
-use Zhengwhizz\CustomizedForm\Services\CustomizedFormTemplateService;
 
 class CustomizedFormTemplateController extends Controller
 {
+    /**
+     * 获取模板列表
+     *
+     * @param Request $request
+     * @param TemplateContract $templateClass
+     * @return void
+     */
     public function index(Request $request, TemplateContract $templateClass)
     {
-        $keywords = $request->keywords;
+        $data = $templateClass->findAllUsing();
 
-        $builder = $templateClass->where('active', true)->when($keywords, function ($query) use ($keywords) {
-            $query->where('name', 'like', "%${keywords}%");
-        });
-        if ($perPage = $request->per_page) {
-            $data = $builder->paginate($perPage);
-        } else {
-            $data = $builder->get();
-        }
         if ($request->expectsJson()) {
             return JsonResource::collection($data);
         }
         return $data;
     }
 
-    public function store(Request $request, CustomizedFormTemplateService $service)
+    /**
+     * 保存模板
+     *
+     * @param Request $request
+     * @param TemplateContract $templateClass
+     * @return void
+     */
+    public function store(Request $request, TemplateContract $templateClass)
     {
-        $service->save($request->all(), ['id' => $request->id]);
+        $templateClass->fill($request->all())->save();
         return ['code' => true];
     }
 
+    /**
+     * 显示某一特定模板
+     *
+     * @param Request $request
+     * @param TemplateContract $template
+     * @return void
+     */
     public function show(Request $request, TemplateContract $template)
     {
         dd($template, 222);
