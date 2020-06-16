@@ -10,7 +10,7 @@ class CustomizedFormTemplateService
         $templateClass = app(TemplateContract::class);
 
         return \DB::transaction(function () use ($templateClass, $attributes, $options) {
-            $templateClass->update(['active' => false], $options);
+            $templateClass->where($options)->update(['active' => false]);
             $templateClass->fill($attributes)->save();
         });
     }

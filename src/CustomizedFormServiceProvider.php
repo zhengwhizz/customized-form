@@ -5,6 +5,8 @@ namespace Zhengwhizz\CustomizedForm;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
+use Zhengwhizz\CustomizedForm\Contracts\CustomizedForm as FormContract;
+use Zhengwhizz\CustomizedForm\Contracts\CustomizedFormTemplate as TemplateContract;
 
 class CustomizedFormServiceProvider extends ServiceProvider
 {
@@ -18,8 +20,9 @@ class CustomizedFormServiceProvider extends ServiceProvider
             __DIR__ . '/../database/migrations/create_customized_form_tables.php.stub' => $this->getMigrationFileName($filesystem),
         ], 'migrations');
 
+        // require __DIR__ . '/../routes/api.php';
         // 注册路由
-        require __DIR__ . '/../routes/api.php';
+        $this->registerRoutes();
 
         $this->registerModelBindings();
 
@@ -35,7 +38,16 @@ class CustomizedFormServiceProvider extends ServiceProvider
             'customized_form'
         );
     }
-
+    protected function registerRoutes()
+    {
+        \Route::group([
+            'prefix' => 'api/customized_form',
+            // 'namespace' => 'Zhengwhizz\CustomizedForm\Controllers',
+            // 'middleware' => "auth:api",
+        ], function () {
+            $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
+        });
+    }
     protected function registerModelBindings()
     {
         $config = $this->app->config['customized_form.models'];

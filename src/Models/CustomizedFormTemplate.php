@@ -3,10 +3,17 @@
 namespace Zhengwhizz\CustomizedForm\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Zhengwhizz\CustomizedForm\Contracts\CustomizedFormTemplate as CustomizedFormTemplateContract;
 
 class CustomizedFormTemplate extends Model implements CustomizedFormTemplateContract
 {
+    protected $fillable = [
+        'name',
+        'content',
+        'active',
+    ];
+
     public function __construct()
     {
         $this->setTable(config('customized_form.table_names.template'));
@@ -15,8 +22,7 @@ class CustomizedFormTemplate extends Model implements CustomizedFormTemplateCont
     {
         return $this->hasMany(
             config('customized_form.models.form'),
-            'template_id',
-            'id',
+            'template_id'
         );
     }
 }

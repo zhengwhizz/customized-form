@@ -18,7 +18,7 @@ class CreateCustomizedFormTables extends Migration
         Schema::create($tableNames['template'], function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('content');
+            $table->text('content');
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
@@ -26,8 +26,8 @@ class CreateCustomizedFormTables extends Migration
         Schema::create($tableNames['form'], function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger("template_id");
-            $table->text('placeholder_data')->nullable();
-            $table->text('form_data')->nullable();
+            $table->text('placeholder_data')->nullable()->comment('占位符及对应的数据');
+            $table->text('form_data')->nullable()->comment('表单及数据');;
             $table->timestamps();
         });
 

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 interface CustomizedForm
 {
+
     /**
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

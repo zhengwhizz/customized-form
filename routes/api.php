@@ -2,7 +2,7 @@
 
 Route::group(['middleware' => 'auth:api'], function () {
 
-    Route::apiResource('customized_form_template', 'Zhengwhizz\CustomizedForm\Controllers\CustomizedFormTemplateController');
-    Route::apiResource('customized_form', 'Zhengwhizz\CustomizedForm\Controllers\CustomizedFormController');
+    Route::apiResource('template', 'Zhengwhizz\CustomizedForm\Http\Controllers\CustomizedFormTemplateController');
+    Route::apiResource('form', 'Zhengwhizz\CustomizedForm\Http\Controllers\CustomizedFormController');
 
 });

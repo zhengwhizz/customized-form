@@ -2,6 +2,11 @@
 
 return [
 
+    'placeholders' => [
+        '[[客户名称]]' => 'customer.name',
+        '[[客户电话]]' => 'customer.phone',
+    ],
+
     'models' => [
 
         /*
