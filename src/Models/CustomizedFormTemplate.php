@@ -37,7 +37,7 @@ class CustomizedFormTemplate extends Model implements CustomizedFormTemplateCont
     public static function findAllUsing($options = []): Collection
     {
         $templateClass = app(CustomizedFormTemplateContract::class);
-        $templates = $templateClass->selectRaw('distinct on (name) *')->where($options)->orderBy('name')->orderBy('created_at', 'desc')->get();
+        $templates = $templateClass->selectRaw('distinct on (name) *')->where($options)->orderBy('name')->orderBy('id', 'desc')->get();
         return $templates;
     }
 
