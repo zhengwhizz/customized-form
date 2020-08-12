@@ -8,10 +8,10 @@
     }],
     "require": {
         "php": ">=7.0",
-        "illuminate/support": "^5.0.1",
-        "illuminate/container": "^5.0.1",
-        "illuminate/contracts": "^5.0.1",
-        "illuminate/database": "^5.0.1"
+        "illuminate/support": ">=5.0.1",
+        "illuminate/container": ">=5.0.1",
+        "illuminate/contracts": ">=5.0.1",
+        "illuminate/database": ">=5.0.1"
     },
     "autoload": {
         "psr-4": {
