@@ -51,7 +51,7 @@ class CustomizedFormTemplate extends Model implements CustomizedFormTemplateCont
     public static function findUsing($name, $options = []): CustomizedFormTemplateContract
     {
         $templateClass = app(CustomizedFormTemplateContract::class);
-        $template = $templateClass->whereName($name)->where($options)->orderBy('created_at', 'desc')->first();
+        $template = $templateClass->whereName($name)->where($options)->orderBy('id', 'desc')->first();
         if (!$template) {
             throw new CustomizedFormTemplateDoesNotExist();
         }
