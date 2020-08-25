@@ -37,7 +37,18 @@ class CustomizedFormTemplate extends Model implements CustomizedFormTemplateCont
     public static function findAllUsing($options = []): Collection
     {
         $templateClass = app(CustomizedFormTemplateContract::class);
-        $templates = $templateClass->selectRaw('distinct on (name) *')->where($options)->orderBy('name')->orderBy('id', 'desc')->get();
+        $connection = config('database.default');
+        $driver = config("database.connections.{$connection}.driver");
+        $query = $templateClass->where($options);
+        switch ($driver) {
+            case 'pgsql':
+                $query->selectRaw('distinct on (name) *');
+                break;
+            default:
+                $query->groupBy('name');
+                break;
+        }
+        $templates = $query->orderBy('name')->orderBy('id', 'desc')->get();
         return $templates;
     }
 
